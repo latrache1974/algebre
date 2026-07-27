@@ -448,6 +448,7 @@ namespace yy {
       // NAMESPACE
       // QUANTIFIER
       // TypeName
+      // T
       char dummy15[sizeof (std::string)];
     };
 
@@ -609,19 +610,20 @@ namespace yy {
         S_NameSpaceList1 = 53,                   // NameSpaceList1
         S_DoubleIdentList = 54,                  // DoubleIdentList
         S_DoubleIdentList1 = 55,                 // DoubleIdentList1
-        S_VariablesDefinitions = 56,             // VariablesDefinitions
-        S_VariablesDefinitions1 = 57,            // VariablesDefinitions1
-        S_DependsClause = 58,                    // DependsClause
-        S_DependsList = 59,                      // DependsList
-        S_Corps = 60,                            // Corps
-        S_CorpsM = 61,                           // CorpsM
-        S_CorpsMM = 62,                          // CorpsMM
-        S_Predicats = 63,                        // Predicats
-        S_Predicats1 = 64,                       // Predicats1
-        S_Predicat = 65,                         // Predicat
-        S_Atom = 66,                             // Atom
-        S_Atoms = 67,                            // Atoms
-        S_Atom1 = 68                             // Atom1
+        S_T = 56,                                // T
+        S_VariablesDefinitions = 57,             // VariablesDefinitions
+        S_VariablesDefinitions1 = 58,            // VariablesDefinitions1
+        S_DependsClause = 59,                    // DependsClause
+        S_DependsList = 60,                      // DependsList
+        S_Corps = 61,                            // Corps
+        S_CorpsM = 62,                           // CorpsM
+        S_CorpsMM = 63,                          // CorpsMM
+        S_Predicats = 64,                        // Predicats
+        S_Predicats1 = 65,                       // Predicats1
+        S_Predicat = 66,                         // Predicat
+        S_Atom = 67,                             // Atom
+        S_Atoms = 68,                            // Atoms
+        S_Atom1 = 69                             // Atom1
       };
     };
 
@@ -729,6 +731,7 @@ namespace yy {
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
       case symbol_kind::S_TypeName: // TypeName
+      case symbol_kind::S_T: // T
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -1060,6 +1063,7 @@ switch (yykind)
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
       case symbol_kind::S_TypeName: // TypeName
+      case symbol_kind::S_T: // T
         value.template destroy< std::string > ();
         break;
 
@@ -2145,8 +2149,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 181,     ///< Last index in yytable_.
-      yynnts_ = 29,  ///< Number of nonterminal symbols.
+      yylast_ = 196,     ///< Last index in yytable_.
+      yynnts_ = 30,  ///< Number of nonterminal symbols.
       yyfinal_ = 5 ///< Termination state number.
     };
 
@@ -2288,6 +2292,7 @@ switch (yykind)
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
       case symbol_kind::S_TypeName: // TypeName
+      case symbol_kind::S_T: // T
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
@@ -2393,6 +2398,7 @@ switch (yykind)
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
       case symbol_kind::S_TypeName: // TypeName
+      case symbol_kind::S_T: // T
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
@@ -2463,7 +2469,7 @@ switch (yykind)
 
 #line 5 "src/parser.yy"
 } // yy
-#line 2467 "parser.tab.hh"
+#line 2473 "parser.tab.hh"
 
 
 

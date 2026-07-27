@@ -47,11 +47,11 @@ void Variables::Add(string q, string ident, string type, Predicat *p, NameSpaceL
     v->q=_exists;
   if ( q=="existsu" )
     v->q=_existsu;
-    v->ident = ident;
-    v->type = type;
-    v->p = p;
-    v->depends = deps;
-    Items.push_back(v);
+  v->ident = ident;
+  v->type = type;
+  v->p = p;
+  v->depends = deps;
+  Items.push_back(v);
 }
 
 Variables *Variables::Copy()

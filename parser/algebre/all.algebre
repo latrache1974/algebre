@@ -1,0 +1,145 @@
+type id(set A) extend application;
+notation "id_%0" instance.p0;
+var forall x : element, in(x,return.A);
+begin
+  (return.A = return.B) => (return(x) = x);
+end
+
+type o(application g,application f) extend application;
+notation "%0o%1" instance.p1,instance.p0;
+var forall x : element, in(x,f.A);
+begin
+  (f.B = g.A) => (return(x) = g(f(x)));
+end
+
+type lci(set A) extend application(A,A);
+notation "%0=lci(%1)" instance.p0,instance.name;
+var forall y : element, in(y,A);
+    forall x : element, in(x,A);
+begin
+  in(return(y,x),A);
+end
+
+type application(set B,set A) extend relation(A,B);
+notation "%2=%0(%1)" instance.p1,instance.p0,instance.name;
+var forall y : element, in(y,B);
+    forall x2 : element, in(x2,A);
+    forall x1 : element, in(x1,A);
+begin
+  (return(y,x1) and return(y,x2)) => (x1 = x2);
+end
+
+type produit_carthesien(set B,set A) extend set;
+notation "%0 x %1" instance.p1,instance.p0;
+var forall a : u2;
+begin
+  (in(a.x,A) and in(a.y,B)) => in(a,return);
+end
+
+type u2(any y,any x) extend element;
+notation "(%0, %1)" instance.p1,instance.p0;
+begin
+  true;
+end
+
+type intersection(set B,set A) extend set;
+notation "%0 ∩ %1" instance.p1,instance.p0;
+var forall x : element;
+begin
+  (in(x,A) and in(x,B)) => in(x,return);
+end
+
+type union(set B,set A) extend set;
+notation "%0 ∪ %1" instance.p1,instance.p0;
+var forall x : element;
+begin
+  (in(x,A) or in(x,B)) => in(x,return);
+end
+
+type complementary(set E,set A) extend set;
+notation "complement de %0 dans %1" instance.p1,instance.p0;
+var forall x : element, in(x,E);
+begin
+  inclus(E,A) => not (in(x,return));
+end
+
+type parts_set(set A) extend set;
+notation "parts_set(%0)" instance.p0;
+var forall X : set;
+begin
+  in(X,return) => (inclus(A,X) or (X = Phi));
+end
+
+function eq(application g,application f);
+notation "%0 = %1" instance.p1,instance.p0;
+var forall x : element, in(x,f.A);
+begin
+  (((f.A = g.A) and (f.B = g.B)) and (f(x) = g(x))) => (f = g);
+end
+
+function eq(set B,set A);
+notation "%0 = %1" instance.p1,instance.p0;
+begin
+  (inclus(B,A) and inclus(A,B)) => (A = B);
+end
+
+function part(set B,set A);
+notation "%0 ⊆ %1" instance.p1,instance.p0;
+begin
+  inclus(B,A);
+end
+
+function inclus(set B,set A);
+notation "%0 ⊆ %1" instance.p1,instance.p0;
+var forall x : element;
+begin
+  in(x,A) => in(x,B);
+end
+
+function equivalence(relation R);
+notation "%0 équivalence" instance.p0;
+begin
+  ((reflexive(R) and symetrique(R)) and transitive(R));
+end
+
+function transitive(relation R);
+notation "%0 symetrique" instance.p0;
+var forall x : element, in(x,R.A);
+begin
+  (((R.A = R.B) and R(y,x)) and R(z,y)) => R(z,x);
+end
+
+function symetrique(relation R);
+notation "%0 symetrique" instance.p0;
+var forall x : element, in(x,R.A);
+begin
+  ((R.A = R.B) and R(y,x)) => R(x,y);
+end
+
+function reflexive(relation R);
+notation "%0 reflexive" instance.p0;
+var forall x : element, in(x,R.A);
+begin
+  (R.A = R.B) => R(x,x);
+end
+
+literal Phi : set;
+notation "∅";
+var forall x : element;
+begin
+  ;
+end
+
+theoreme "Récursivité de l'inclusion"(set C,set B,set A);
+begin
+  (inclus(B,A) and inclus(C,B)) => inclus(C,A);
+end
+
+goal
+var exists x : element;
+    forall A : set;
+begin
+  (A != Phi) => in(x,A);
+end
+
+end.

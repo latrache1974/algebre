@@ -14,6 +14,7 @@ class Node
         NodeType nodeType;
         virtual ~Node() = default;
         virtual Node *Copy()=0;
+        virtual string ToString()=0;
     protected:
 
     private:
@@ -28,6 +29,7 @@ class NodeTerminal : public Node
         NodeTerminal();
         virtual ~NodeTerminal();
         Node *Copy() override;
+        string ToString() override;
     protected:
 
     private:
@@ -41,6 +43,7 @@ class NodeFunction : public Node
         NodeFunction();
         virtual ~NodeFunction();
         Node *Copy() override;
+        string ToString() override;
     protected:
 
     private:
@@ -54,6 +57,7 @@ class NodeOperator2 : public Node
         NodeOperator2();
         virtual ~NodeOperator2();
         Node *Copy() override;
+        string ToString() override;
     protected:
 
     private:
@@ -67,6 +71,7 @@ class NodeOperator1 : public Node
         NodeOperator1();
         virtual ~NodeOperator1();
         Node *Copy() override;
+        string ToString() override;
     protected:
 
     private:

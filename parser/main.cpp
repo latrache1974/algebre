@@ -13,6 +13,7 @@ int main(int argc, char* argv[]) {
     string msg;
     universe=new UniverseBase();
     universe->Parse("./algebre/main.algebre", &msg);
+    universe->ExportToFile("./algebre/all.algebre");
     delete universe;
     return 0;
 }

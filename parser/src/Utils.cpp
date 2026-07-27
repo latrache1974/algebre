@@ -148,7 +148,8 @@ void Utils::PerformeInclude(string filename)
 {
     string msg;
     UniverseBase *univ=new UniverseBase();
-    univ->Parse(filename, &msg);
+    if ( !univ->Parse(filename, &msg) )
+      exit(1);
     universe->CopyFrom(univ);
     delete univ;
 }

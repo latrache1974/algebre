@@ -1,0 +1,29 @@
+
+function reflexive(relation R);
+notation "%0 reflexive" instance.p0;
+var forall x :element, in(x,R.A);  
+begin
+  R.A=R.B => R(x,x);
+end
+
+function symetrique(relation R);
+notation "%0 symetrique" instance.p0;
+var forall x :element, in(x,R.A);  
+begin
+  (R.A=R.B) and ( R(x,y) ) => R(y,x);
+end
+
+function transitive(relation R);
+notation "%0 symetrique" instance.p0;
+var forall x :element, in(x,R.A);  
+begin
+  (R.A=R.B) and ( R(x,y) ) and ( R(y,z) ) => R(x,z);
+end
+
+function equivalence(relation R);
+notation "%0 équivalence" instance.p0;
+begin
+  reflexive(R) and symetrique(R) and transitive(R);
+end
+
+end.

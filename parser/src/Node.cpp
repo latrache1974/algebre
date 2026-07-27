@@ -82,6 +82,48 @@ Node *NodeOperator1::Copy()
   return r;
 }
 
+string NodeTerminal::ToString()
+{
+  return ident;
+}
+
+string NodeFunction::ToString()
+{
+  string r=ident+"(";
+  for (size_t i=0; i<params.size(); i++)
+  {
+    if (i>0)
+      r+=",";
+    r+=params[i]->ToString();
+  }
+  r+=")";
+  return r;
+}
+
+string NodeOperator1::ToString()
+{
+  // Un seul opérateur unaire pour l'instant : otNot.
+  return "not ("+node->ToString()+")";
+}
+
+static string OperatorType2ToString(OperatorType2 op)
+{
+  switch(op)
+  {
+    case otAnd: return "and";
+    case otOr:  return "or";
+    case otXor: return "xor";
+    case otEq:  return "=";
+    case otNeq: return "!=";
+  }
+  return "?";
+}
+
+string NodeOperator2::ToString()
+{
+  return "("+left->ToString()+" "+OperatorType2ToString(op)+" "+right->ToString()+")";
+}
+
 
 
 

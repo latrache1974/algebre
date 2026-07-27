@@ -12,6 +12,7 @@ class WorkPlan
         Predicats *predicats;
         WorkPlan();
         virtual ~WorkPlan();
+        void ExportToAlgebre(string filename);
 
     protected:
 

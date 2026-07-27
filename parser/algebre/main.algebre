@@ -1,3 +1,4 @@
+include "./algebre/relations.algebre"
 include "./algebre/ensembles.algebre"
 include "./algebre/applications.algebre"
 

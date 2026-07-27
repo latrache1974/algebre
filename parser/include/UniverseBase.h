@@ -26,6 +26,7 @@ class UniverseBase
         void AddTheoreme(Theoreme *);
         void SetGoal(Goal *);
         void CopyFrom(UniverseBase *);
+        void ExportToFile(string filename);
     protected:
 
     private:

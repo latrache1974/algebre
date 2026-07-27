@@ -6,3 +6,4 @@
     - Erreur sémentiques
     - Types: sentence <> cond
     - notation applications, relations... f(x), f(A) ...
+    - Builtins relations.A relations.B

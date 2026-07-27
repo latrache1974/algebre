@@ -80,6 +80,7 @@
 %type <Parameters *> DoubleIdentList
 %type <Parameters *> DoubleIdentList1
 %type <std::string> TypeName
+%type <std::string> T
 %type <Predicat *> ExtendClause
 %type <NameSpaceList *> DependsClause
 %type <NameSpaceList *> DependsList
@@ -94,6 +95,7 @@
 %type <Corps *> Corps
 %type <CorpsM *> CorpsM
 %type <CorpsMM *> CorpsMM
+
 
 
 %%
@@ -134,6 +136,7 @@ ExtendClause : EXTEND Atom {$$=$2;}
 /* "any" : n'importe quel type, utilisable partout où un nom de type est attendu */
 TypeName : IDENT {$$=$1;}
          | ANY {$$="any";}
+         | RELATION {$$="relation";}
          ;
 
 LiteralDefinition : LITERAL IDENT COLON TypeName SEMI NotationDefinition VariablesDefinitions Corps
@@ -201,9 +204,12 @@ DoubleIdentList : DoubleIdentList1 {$$=$1;}
                 ;
 
 /* FIX : même bug d'initialisation que NameSpaceList1. */
-DoubleIdentList1 : TypeName IDENT COMMA DoubleIdentList1 {$$=$4; $$->Add($1,$2);}
-                 | TypeName IDENT {$$=new Parameters(); $$->Add($1,$2);}
+DoubleIdentList1 : TypeName T COMMA DoubleIdentList1 {$$=$4; $$->Add($1,$2);}
+                 | TypeName T {$$=new Parameters(); $$->Add($1,$2);}
                  ;
+T                 : IDENT {$$=$1;} 
+                  | RELATION {$$="relation";} 
+                  | NAMESPACE {$$=$1;} ;
 
 /* FIX : $2 (VariablesDefinitions1) était ignoré ; $$=new Variables()
    recréait une liste vide au lieu de récupérer celle construite. */
