@@ -59,20 +59,32 @@ void UniverseBase::SetGoal(Goal *g)
 bool UniverseBase::Parse(string filename,string *msg)
 {
     Driver driver;
-    cout << "[Compilateur] Lancement de l'analyse syntaxique..." << std::endl;
+    cout << "[" << filename << "] Lancement de l'analyse syntaxique..." << std::endl;
 
     int code_retour = driver.parse(filename);
 
     if (code_retour == 0) {
-        cout << "[Succes] Le fichier respecte la grammaire." << std::endl;
+        cout << filename << " OK OK OK OK OK OK ." << std::endl;
         return true;
     } else {
         // Les erreurs de syntaxe (ligne/colonne incluses) ont déjà été
         // affichées par yy::Parser::error() pendant driver.parse().
         if (msg)
             *msg = "Des erreurs de syntaxe ont ete detectees.";
-        cerr << "[Echec] Des erreurs de syntaxe ont ete detectees." << std::endl;
+        cerr << filename << "  NO NO NO NO!" << std::endl;
         return false;
     }
+}
+
+void UniverseBase::CopyFrom(UniverseBase *u)
+{
+  for(size_t i=0; i<u->types->Items.size(); i++)
+    types->Items.push_back(u->types->Items[i]->Copy());
+/*        Types *types;
+        Functions *functions;
+        Literals *literals;
+        Theoremes *theoremes;
+        Goal *goal;
+        WorkPlan *plan;*/
 
 }

@@ -1,0 +1,40 @@
+
+type application(set A, set B) extend relation(A,B);
+notation "%2=%0(%1)" instance.name, instance.p0, instance.p1;
+var forall x1 : element, in(x1, A);
+    forall x2 : element, in(x2, A);
+    forall y : element, in(y, B);
+begin
+   ( return(x1,y) ) and ( return(x2,y) ) => x1 = x2;
+end
+
+type lci(set A) extend application(A,A);
+notation "%0=lci(%1)" instance.name, instance.p0;
+var forall x : element, in(x, A);
+    forall y : element, in(y, A);
+begin
+   in(return(x,y), A);
+end
+
+type o(application f, application g) extend application;
+notation "%0o%1" instance.p0, instance.p1;
+var forall x:element, in(x,f.A);
+begin
+   (f.B=g.A) => return(x) = g(f(x));
+end
+
+type id(set A) extend application;
+notation "id_%0" instance.p0;
+var forall x:element, in(x,return.A);
+begin
+   (return.A=return.B) => return(x) = x;
+end
+
+function eq(application f, application g);
+notation "%0 = %1" instance.p0, instance.p1;
+var forall x :element, in(x,f.A);
+begin
+  (f.A = g.A) and (f.B = g.B ) and (f(x)=g(x)) => f=g;
+end
+
+end.

@@ -6,30 +6,69 @@ begin
 end
 
 function inclus(set A, set B);
-notation "%0 ∈ %1" instance.p0, instance.p1;
+notation "%0 ⊆ %1" instance.p0, instance.p1;
 var forall x : element;
 begin
   in(x, A) => in(x,B);
 end
 
-type lci(application l, set A);
-notation "%0" instance.name;
-var forall x : element, in(x, A);
-    forall y : element, in(y, A);
+function part(set A, set B);
+notation "%0 ⊆ %1" instance.p0, instance.p1;
 begin
-   in(l(x,y), A);
+  inclus(A,B);
 end
+
+type parts_set(set A) extend set;
+notation "parts_set(%0)" instance.p0;
+var forall X : set;
+begin
+  in(X,return) => inclus(X,A) or (X=Phi);
+end
+
+type complementary(set A, set E ) extend set;
+notation "complement de %0 dans %1" instance.p0, instance.p1;
+var forall x:element, in(x,E); 
+begin
+  inclus(A, E) => not in(x,return);
+end
+
+type union(set A, set B) extend set;
+notation "%0 ∪ %1" instance.p0, instance.p1;
+var forall x:element; 
+begin
+  in(x,A) or in(x,B) => in(x,return);
+end
+
+type intersection(set A, set B) extend set;
+notation "%0 ∩ %1" instance.p0, instance.p1;
+var forall x:element; 
+begin
+  in(x,A) and in(x,B) => in(x,return);
+end
+
+type u2(any x, any y) extend element;
+notation "(%0, %1)" instance.p0, instance.p1;
+begin
+  true;
+end
+
+type produit_carthesien(set A, set B) extend set;
+notation "%0 x %1" instance.p0, instance.p1;
+var forall a:u2; 
+begin
+  in(a.x,A) and in(a.y,B) => in(a,return);
+end
+
+function eq(set A, set B);
+notation "%0 = %1" instance.p0, instance.p1;
+begin
+  inclus(A,B) and inclus(B,A) <=> A=B;
+end
+
 
 theoreme "Récursivité de l'inclusion" (set A, set B, set C);
 begin
   inclus(A, B) and inclus(B, C) => inclus(A, C);
 end  
-
-goal 
-var forall A : set;
-    exists x : element;
-begin
-  A != Phi => in(x, A);
-end    
 
 end.

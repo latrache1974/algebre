@@ -31,8 +31,15 @@ void Function::AssignFromDoubleIdentList(Parameters *ps)
 
 void Function::AssignFromCorps(Corps *c)
 {
-  cond=c->left->Copy();
-  sentence=c->right->Copy();
+  if ( ( c->type=="=>" ) || ( c->type=="<=>") )
+    {
+    cond=c->left->Copy();
+    sentence=c->right->Copy();
+    }
+  if ( ( c->type=="sentence" )  )
+    {
+    sentence=c->sentence->Copy();
+    }
   delete c;
 }
 

@@ -16,3 +16,8 @@ Predicat *Predicat::Copy()
   r->Axiom=Axiom->Copy();
   return r;
 }
+
+string Predicat::ToString()
+{
+  return Axiom->ToString();
+}

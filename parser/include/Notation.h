@@ -12,6 +12,7 @@ class Notation
         NameSpaceList *params;
         Notation();
         virtual ~Notation();
+        Notation *Copy();
 
     protected:
 

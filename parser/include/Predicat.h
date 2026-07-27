@@ -12,6 +12,7 @@ class Predicat
         Predicat();
         virtual ~Predicat();
         Predicat *Copy();
+        string ToString();
 
     protected:
 

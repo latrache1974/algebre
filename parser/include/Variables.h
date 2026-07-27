@@ -5,6 +5,7 @@ using namespace std;
 #include<string>
 #include<vector>
 #include"Predicat.h"
+#include"NameSpaceList.h"
 
 
 enum Quantifier { _forall, _exists, _existsu};
@@ -14,6 +15,8 @@ class Variable {
   Quantifier q;
   string ident, type;
   Predicat *p;
+  NameSpaceList *depends;
+  Variable *Copy();
 };
 
 class Variables
@@ -24,6 +27,8 @@ class Variables
         virtual ~Variables();
         void Add(string ,string ,string );
         void Add(string ,string ,string ,Predicat *);
+        void Add(string ,string ,string ,Predicat *,NameSpaceList *);
+        Variables *Copy();
 
     protected:
 

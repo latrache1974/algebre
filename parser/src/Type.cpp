@@ -48,3 +48,19 @@ Types::Types()
 Types::~Types()
 {
 }
+
+Type *Type::Copy()
+{
+  Type *r=new Type();
+  r->name=name;
+  r->notation=notation->Copy();
+  r->params=params->Copy();
+  r->Vars=Vars->Copy();
+  if (cond)
+    r->cond=cond->Copy();
+  if (sentence)
+    r->sentence=sentence->Copy();
+  if (baseType)
+    r->baseType=baseType->Copy();
+  return r;
+}

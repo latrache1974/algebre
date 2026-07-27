@@ -124,7 +124,31 @@ Predicat *Utils::CreateNEq(Predicat *a, Predicat *b)
   return r;
 }
 
-void Utils::PerformeInclude(string )
+Predicat *Utils::CreateTrue()
 {
+  return CreateTerminal("true");
 }
 
+Predicat *Utils::CreateFalse()
+{
+  return CreateTerminal("false");
+}
+
+Predicat *Utils::CreateReturn()
+{
+  return CreateTerminal("return");
+}
+
+Predicat *Utils::CreateReturn(Predicats *ps)
+{
+  return CreateFunction("return", ps);
+}
+
+void Utils::PerformeInclude(string filename)
+{
+    string msg;
+    UniverseBase *univ=new UniverseBase();
+    univ->Parse(filename, &msg);
+    universe->CopyFrom(univ);
+    delete univ;
+}

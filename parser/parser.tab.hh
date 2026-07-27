@@ -411,6 +411,8 @@ namespace yy {
 
       // NameSpaceList
       // NameSpaceList1
+      // DependsClause
+      // DependsList
       char dummy7[sizeof (NameSpaceList *)];
 
       // NotationDefinition
@@ -420,6 +422,7 @@ namespace yy {
       // DoubleIdentList1
       char dummy9[sizeof (Parameters *)];
 
+      // ExtendClause
       // Predicat
       // Atom
       char dummy10[sizeof (Predicat *)];
@@ -444,6 +447,7 @@ namespace yy {
       // STRING
       // NAMESPACE
       // QUANTIFIER
+      // TypeName
       char dummy15[sizeof (std::string)];
     };
 
@@ -518,13 +522,19 @@ namespace yy {
     EQ = 279,                      // EQ
     NEQ = 280,                     // NEQ
     GOAL = 281,                    // GOAL
-    LPAREN = 282,                  // LPAREN
-    RPAREN = 283,                  // RPAREN
-    COMMA = 284,                   // COMMA
-    SEMI = 285,                    // SEMI
-    COLON = 286,                   // COLON
-    DOT = 287,                     // DOT
-    PIPE = 288                     // PIPE
+    ANY = 282,                     // ANY
+    RETURN = 283,                  // RETURN
+    TRUE = 284,                    // TRUE
+    FALSE = 285,                   // FALSE
+    DEPENDS = 286,                 // DEPENDS
+    EXTEND = 287,                  // EXTEND
+    LPAREN = 288,                  // LPAREN
+    RPAREN = 289,                  // RPAREN
+    COMMA = 290,                   // COMMA
+    SEMI = 291,                    // SEMI
+    COLON = 292,                   // COLON
+    DOT = 293,                     // DOT
+    PIPE = 294                     // PIPE
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -541,7 +551,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 34, ///< Number of tokens.
+        YYNTOKENS = 40, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -570,38 +580,48 @@ namespace yy {
         S_EQ = 24,                               // EQ
         S_NEQ = 25,                              // NEQ
         S_GOAL = 26,                             // GOAL
-        S_LPAREN = 27,                           // LPAREN
-        S_RPAREN = 28,                           // RPAREN
-        S_COMMA = 29,                            // COMMA
-        S_SEMI = 30,                             // SEMI
-        S_COLON = 31,                            // COLON
-        S_DOT = 32,                              // DOT
-        S_PIPE = 33,                             // PIPE
-        S_YYACCEPT = 34,                         // $accept
-        S_S = 35,                                // S
-        S_IncludeSection = 36,                   // IncludeSection
-        S_Algebre = 37,                          // Algebre
-        S_TypeDefinition = 38,                   // TypeDefinition
-        S_LiteralDefinition = 39,                // LiteralDefinition
-        S_FunctionDefinition = 40,               // FunctionDefinition
-        S_TheoremeDefinition = 41,               // TheoremeDefinition
-        S_GoalDefinition = 42,                   // GoalDefinition
-        S_NotationDefinition = 43,               // NotationDefinition
-        S_NameSpaceList = 44,                    // NameSpaceList
-        S_NameSpaceList1 = 45,                   // NameSpaceList1
-        S_DoubleIdentList = 46,                  // DoubleIdentList
-        S_DoubleIdentList1 = 47,                 // DoubleIdentList1
-        S_VariablesDefinitions = 48,             // VariablesDefinitions
-        S_VariablesDefinitions1 = 49,            // VariablesDefinitions1
-        S_Corps = 50,                            // Corps
-        S_CorpsM = 51,                           // CorpsM
-        S_CorpsMM = 52,                          // CorpsMM
-        S_Predicats = 53,                        // Predicats
-        S_Predicats1 = 54,                       // Predicats1
-        S_Predicat = 55,                         // Predicat
-        S_Atom = 56,                             // Atom
-        S_Atoms = 57,                            // Atoms
-        S_Atom1 = 58                             // Atom1
+        S_ANY = 27,                              // ANY
+        S_RETURN = 28,                           // RETURN
+        S_TRUE = 29,                             // TRUE
+        S_FALSE = 30,                            // FALSE
+        S_DEPENDS = 31,                          // DEPENDS
+        S_EXTEND = 32,                           // EXTEND
+        S_LPAREN = 33,                           // LPAREN
+        S_RPAREN = 34,                           // RPAREN
+        S_COMMA = 35,                            // COMMA
+        S_SEMI = 36,                             // SEMI
+        S_COLON = 37,                            // COLON
+        S_DOT = 38,                              // DOT
+        S_PIPE = 39,                             // PIPE
+        S_YYACCEPT = 40,                         // $accept
+        S_S = 41,                                // S
+        S_IncludeSection = 42,                   // IncludeSection
+        S_Algebre = 43,                          // Algebre
+        S_TypeDefinition = 44,                   // TypeDefinition
+        S_ExtendClause = 45,                     // ExtendClause
+        S_TypeName = 46,                         // TypeName
+        S_LiteralDefinition = 47,                // LiteralDefinition
+        S_FunctionDefinition = 48,               // FunctionDefinition
+        S_TheoremeDefinition = 49,               // TheoremeDefinition
+        S_GoalDefinition = 50,                   // GoalDefinition
+        S_NotationDefinition = 51,               // NotationDefinition
+        S_NameSpaceList = 52,                    // NameSpaceList
+        S_NameSpaceList1 = 53,                   // NameSpaceList1
+        S_DoubleIdentList = 54,                  // DoubleIdentList
+        S_DoubleIdentList1 = 55,                 // DoubleIdentList1
+        S_VariablesDefinitions = 56,             // VariablesDefinitions
+        S_VariablesDefinitions1 = 57,            // VariablesDefinitions1
+        S_DependsClause = 58,                    // DependsClause
+        S_DependsList = 59,                      // DependsList
+        S_Corps = 60,                            // Corps
+        S_CorpsM = 61,                           // CorpsM
+        S_CorpsMM = 62,                          // CorpsMM
+        S_Predicats = 63,                        // Predicats
+        S_Predicats1 = 64,                       // Predicats1
+        S_Predicat = 65,                         // Predicat
+        S_Atom = 66,                             // Atom
+        S_Atoms = 67,                            // Atoms
+        S_Atom1 = 68                             // Atom1
       };
     };
 
@@ -664,6 +684,8 @@ namespace yy {
 
       case symbol_kind::S_NameSpaceList: // NameSpaceList
       case symbol_kind::S_NameSpaceList1: // NameSpaceList1
+      case symbol_kind::S_DependsClause: // DependsClause
+      case symbol_kind::S_DependsList: // DependsList
         value.move< NameSpaceList * > (std::move (that.value));
         break;
 
@@ -676,6 +698,7 @@ namespace yy {
         value.move< Parameters * > (std::move (that.value));
         break;
 
+      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_Predicat: // Predicat
       case symbol_kind::S_Atom: // Atom
         value.move< Predicat * > (std::move (that.value));
@@ -705,6 +728,7 @@ namespace yy {
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
+      case symbol_kind::S_TypeName: // TypeName
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -991,6 +1015,8 @@ switch (yykind)
 
       case symbol_kind::S_NameSpaceList: // NameSpaceList
       case symbol_kind::S_NameSpaceList1: // NameSpaceList1
+      case symbol_kind::S_DependsClause: // DependsClause
+      case symbol_kind::S_DependsList: // DependsList
         value.template destroy< NameSpaceList * > ();
         break;
 
@@ -1003,6 +1029,7 @@ switch (yykind)
         value.template destroy< Parameters * > ();
         break;
 
+      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_Predicat: // Predicat
       case symbol_kind::S_Atom: // Atom
         value.template destroy< Predicat * > ();
@@ -1032,6 +1059,7 @@ switch (yykind)
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
+      case symbol_kind::S_TypeName: // TypeName
         value.template destroy< std::string > ();
         break;
 
@@ -1595,6 +1623,96 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_ANY (location_type l)
+      {
+        return symbol_type (token::ANY, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_ANY (const location_type& l)
+      {
+        return symbol_type (token::ANY, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_RETURN (location_type l)
+      {
+        return symbol_type (token::RETURN, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_RETURN (const location_type& l)
+      {
+        return symbol_type (token::RETURN, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_TRUE (location_type l)
+      {
+        return symbol_type (token::TRUE, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_TRUE (const location_type& l)
+      {
+        return symbol_type (token::TRUE, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_FALSE (location_type l)
+      {
+        return symbol_type (token::FALSE, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_FALSE (const location_type& l)
+      {
+        return symbol_type (token::FALSE, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_DEPENDS (location_type l)
+      {
+        return symbol_type (token::DEPENDS, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_DEPENDS (const location_type& l)
+      {
+        return symbol_type (token::DEPENDS, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_EXTEND (location_type l)
+      {
+        return symbol_type (token::EXTEND, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_EXTEND (const location_type& l)
+      {
+        return symbol_type (token::EXTEND, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_LPAREN (location_type l)
       {
         return symbol_type (token::LPAREN, std::move (l));
@@ -1749,7 +1867,7 @@ switch (yykind)
     /// \param yyvalue   the value to check
     static bool yy_table_value_is_error_ (int yyvalue) YY_NOEXCEPT;
 
-    static const signed char yypact_ninf_;
+    static const short yypact_ninf_;
     static const signed char yytable_ninf_;
 
     /// Convert a scanner token kind \a t to a symbol kind.
@@ -1778,14 +1896,14 @@ switch (yykind)
     static const short yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
-    static const signed char yydefgoto_[];
+    static const unsigned char yydefgoto_[];
 
     // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
     // positive, shift that token.  If negative, reduce the rule whose
     // number is the opposite.  If YYTABLE_NINF, syntax error.
     static const unsigned char yytable_[];
 
-    static const unsigned char yycheck_[];
+    static const short yycheck_[];
 
     // YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
     // state STATE-NUM.
@@ -2027,8 +2145,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 155,     ///< Last index in yytable_.
-      yynnts_ = 25,  ///< Number of nonterminal symbols.
+      yylast_ = 181,     ///< Last index in yytable_.
+      yynnts_ = 29,  ///< Number of nonterminal symbols.
       yyfinal_ = 5 ///< Termination state number.
     };
 
@@ -2076,10 +2194,11 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30,    31,    32,    33
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39
     };
     // Last valid token kind.
-    const int code_max = 288;
+    const int code_max = 294;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -2124,6 +2243,8 @@ switch (yykind)
 
       case symbol_kind::S_NameSpaceList: // NameSpaceList
       case symbol_kind::S_NameSpaceList1: // NameSpaceList1
+      case symbol_kind::S_DependsClause: // DependsClause
+      case symbol_kind::S_DependsList: // DependsList
         value.copy< NameSpaceList * > (YY_MOVE (that.value));
         break;
 
@@ -2136,6 +2257,7 @@ switch (yykind)
         value.copy< Parameters * > (YY_MOVE (that.value));
         break;
 
+      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_Predicat: // Predicat
       case symbol_kind::S_Atom: // Atom
         value.copy< Predicat * > (YY_MOVE (that.value));
@@ -2165,6 +2287,7 @@ switch (yykind)
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
+      case symbol_kind::S_TypeName: // TypeName
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
@@ -2225,6 +2348,8 @@ switch (yykind)
 
       case symbol_kind::S_NameSpaceList: // NameSpaceList
       case symbol_kind::S_NameSpaceList1: // NameSpaceList1
+      case symbol_kind::S_DependsClause: // DependsClause
+      case symbol_kind::S_DependsList: // DependsList
         value.move< NameSpaceList * > (YY_MOVE (s.value));
         break;
 
@@ -2237,6 +2362,7 @@ switch (yykind)
         value.move< Parameters * > (YY_MOVE (s.value));
         break;
 
+      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_Predicat: // Predicat
       case symbol_kind::S_Atom: // Atom
         value.move< Predicat * > (YY_MOVE (s.value));
@@ -2266,6 +2392,7 @@ switch (yykind)
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
+      case symbol_kind::S_TypeName: // TypeName
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
@@ -2336,7 +2463,7 @@ switch (yykind)
 
 #line 5 "src/parser.yy"
 } // yy
-#line 2340 "parser.tab.hh"
+#line 2467 "parser.tab.hh"
 
 
 

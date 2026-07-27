@@ -25,6 +25,7 @@ class UniverseBase
         void AddLiteral(Literal *);
         void AddTheoreme(Theoreme *);
         void SetGoal(Goal *);
+        void CopyFrom(UniverseBase *);
     protected:
 
     private:

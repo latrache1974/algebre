@@ -1,0 +1,8 @@
+    *- Variables et dépendance d'autres variables
+    *- true, false pour les prédicats
+    *- any, return
+    *- Types doivent avoir un type de base  ex:application extend relation(..) | ident !!!
+    *- Atom peut être NAMESPACE
+    - Erreur sémentiques
+    - Types: sentence <> cond
+    - notation applications, relations... f(x), f(A) ...

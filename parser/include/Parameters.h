@@ -8,6 +8,7 @@ using namespace std;
 class Parameter{
   public:
     string type, ident;
+    Parameter *Copy();
 };
 
 class Parameters
@@ -17,6 +18,7 @@ class Parameters
         Parameters();
         virtual ~Parameters();
         void Add(string ,string );
+        Parameters *Copy();
 
     protected:
 

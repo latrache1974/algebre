@@ -12,6 +12,7 @@ class NameSpaceList
         NameSpaceList();
         virtual ~NameSpaceList();
         void Add(string );
+        NameSpaceList *Copy();
 
     protected:
 

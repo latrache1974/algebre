@@ -5,6 +5,7 @@ using namespace std;
 #include<string>
 #include"Predicat.h"
 #include"Predicats.h"
+#include"UniverseBase.h"
 
 class Utils
 {
@@ -21,6 +22,10 @@ class Utils
         static Predicat *CreateRelation(Predicat * , Predicat * );
         static Predicat *CreateEq(Predicat *, Predicat *);
         static Predicat *CreateNEq(Predicat *, Predicat *);
+        static Predicat *CreateTrue();
+        static Predicat *CreateFalse();
+        static Predicat *CreateReturn();
+        static Predicat *CreateReturn(Predicats *);
         static void PerformeInclude(string );
     protected:
 

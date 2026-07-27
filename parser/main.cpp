@@ -12,7 +12,7 @@ UniverseBase *universe;
 int main(int argc, char* argv[]) {
     string msg;
     universe=new UniverseBase();
-    universe->Parse("./algebre/ensembles.algebre", &msg);
+    universe->Parse("./algebre/main.algebre", &msg);
     delete universe;
     return 0;
 }

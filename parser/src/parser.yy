@@ -43,6 +43,7 @@
 %token NOT OR AND XOR
 %token APPARTIENT RELATION
 %token BEGIN_ EQ NEQ GOAL
+%token ANY RETURN TRUE FALSE DEPENDS EXTEND
 
 /* Tokens de ponctuation : noms simples, plus d'alias sur littéral
    caractère. Le mélange nom-symbolique / littéral 'x' dans le corps
@@ -78,6 +79,10 @@
 %type <NameSpaceList *> NameSpaceList1
 %type <Parameters *> DoubleIdentList
 %type <Parameters *> DoubleIdentList1
+%type <std::string> TypeName
+%type <Predicat *> ExtendClause
+%type <NameSpaceList *> DependsClause
+%type <NameSpaceList *> DependsList
 %type <Variables *> VariablesDefinitions
 %type <Variables *> VariablesDefinitions1
 %type <Predicats *> Predicats
@@ -109,16 +114,29 @@ Algebre : TypeDefinition Algebre {universe->AddType($1);}
         | GoalDefinition END DOT {printf("all is ok\n"); universe->SetGoal($1);}
         ;
 
-TypeDefinition : TYPE IDENT LPAREN DoubleIdentList RPAREN SEMI NotationDefinition VariablesDefinitions Corps
+TypeDefinition : TYPE IDENT LPAREN DoubleIdentList RPAREN ExtendClause SEMI NotationDefinition VariablesDefinitions Corps
                  {$$=new Type();
                  $$->name=$2;
                  $$->AssignFromDoubleIdentList($4);
-                 $$->notation=$7;
-                 $$->Vars=$8;
-                 $$->AssignFromCorps($9);}
+                 $$->baseType=$6;
+                 $$->notation=$8;
+                 $$->Vars=$9;
+                 $$->AssignFromCorps($10);}
                ;
 
-LiteralDefinition : LITERAL IDENT COLON IDENT SEMI NotationDefinition VariablesDefinitions Corps
+/* Type de base optionnel, ex: "extend relation(a,b)" ou "extend ident".
+   Réutilise directement Atom (déjà capable de produire ident ou ident(...)),
+   pas besoin d'une règle/type dédiés. */
+ExtendClause : EXTEND Atom {$$=$2;}
+             | /* vide */ {$$=NULL;}
+             ;
+
+/* "any" : n'importe quel type, utilisable partout où un nom de type est attendu */
+TypeName : IDENT {$$=$1;}
+         | ANY {$$="any";}
+         ;
+
+LiteralDefinition : LITERAL IDENT COLON TypeName SEMI NotationDefinition VariablesDefinitions Corps
                  {$$=new Literal();
                  $$->name=$2;
                  $$->type=$4;
@@ -183,8 +201,8 @@ DoubleIdentList : DoubleIdentList1 {$$=$1;}
                 ;
 
 /* FIX : même bug d'initialisation que NameSpaceList1. */
-DoubleIdentList1 : IDENT IDENT COMMA DoubleIdentList1 {$$=$4; $$->Add($1,$2);}
-                 | IDENT IDENT {$$=new Parameters(); $$->Add($1,$2);}
+DoubleIdentList1 : TypeName IDENT COMMA DoubleIdentList1 {$$=$4; $$->Add($1,$2);}
+                 | TypeName IDENT {$$=new Parameters(); $$->Add($1,$2);}
                  ;
 
 /* FIX : $2 (VariablesDefinitions1) était ignoré ; $$=new Variables()
@@ -194,11 +212,20 @@ VariablesDefinitions : VAR VariablesDefinitions1 {$$=$2;}
                      ;
 
 /* FIX : même bug d'initialisation que les listes précédentes. */
-VariablesDefinitions1 : QUANTIFIER IDENT COLON IDENT SEMI VariablesDefinitions1 {$$=$6; $$->Add($1, $2, $4);}
-                      | QUANTIFIER IDENT COLON IDENT COMMA Predicat SEMI VariablesDefinitions1 {$$=$8; $$->Add($1, $2, $4, $6);}
-                      | QUANTIFIER IDENT COLON IDENT SEMI {$$=new Variables(); $$->Add($1, $2, $4);}
-                      | QUANTIFIER IDENT COLON IDENT COMMA Predicat SEMI {$$=new Variables(); $$->Add($1, $2, $4, $6);}
+VariablesDefinitions1 : QUANTIFIER IDENT COLON IDENT DependsClause SEMI VariablesDefinitions1 {$$=$7; $$->Add($1, $2, $4, NULL, $5);}
+                      | QUANTIFIER IDENT COLON IDENT COMMA Predicat DependsClause SEMI VariablesDefinitions1 {$$=$9; $$->Add($1, $2, $4, $6, $7);}
+                      | QUANTIFIER IDENT COLON IDENT DependsClause SEMI {$$=new Variables(); $$->Add($1, $2, $4, NULL, $5);}
+                      | QUANTIFIER IDENT COLON IDENT COMMA Predicat DependsClause SEMI {$$=new Variables(); $$->Add($1, $2, $4, $6, $7);}
                       ;
+
+/* "depends x,z" : liste des variables dont dépend la variable courante */
+DependsClause : DEPENDS DependsList {$$=$2;}
+              | /* vide */ {$$=NULL;}
+              ;
+
+DependsList : IDENT COMMA DependsList {$$=$3; $$->Add($1);}
+            | IDENT {$$=new NameSpaceList(); $$->Add($1);}
+            ;
 
 /* Version mise à jour de Corps */
 Corps : BEGIN_ Predicat ARROW_IMPLIES Predicat SEMI END { $$=new Corps(); $$->Assign($2, "=>", $4);}
@@ -247,11 +274,16 @@ Predicat : NOT Predicat  {$$=Utils::CreateNot($2);}
          | Atom EQ Atom {$$=Utils::CreateEq($1,$3);}
          | Atom NEQ Atom {$$=Utils::CreateNEq($1,$3);}
          | LPAREN Predicat RPAREN {$$=$2;}
+         | TRUE {$$=Utils::CreateTrue();}
+         | FALSE {$$=Utils::CreateFalse();}
          | Atom {$$=$1;}
          ;
 
 Atom : IDENT LPAREN Atoms RPAREN  {$$=Utils::CreateFunction($1,$3);}
      | IDENT {$$=Utils::CreateTerminal($1);}
+     | NAMESPACE {$$=Utils::CreateTerminal($1);}
+     | RETURN {$$=Utils::CreateReturn();}
+     | RETURN LPAREN Atoms RPAREN {$$=Utils::CreateReturn($3);}
      | APPARTIENT LPAREN Atom COMMA Atom RPAREN {$$=Utils::CreateAppartient($3,$5);}
      | RELATION LPAREN Atom COMMA Atom RPAREN {$$=Utils::CreateRelation($3,$5);}
      ;

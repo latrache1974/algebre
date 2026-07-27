@@ -12,3 +12,11 @@ void NameSpaceList::Add(string s)
 {
   Items.push_back(s);
 }
+
+NameSpaceList *NameSpaceList::Copy()
+{
+  NameSpaceList *r=new NameSpaceList();
+  for(size_t i=0; i<Items.size(); i++)
+    r->Add(Items[i]);
+  return r;
+}

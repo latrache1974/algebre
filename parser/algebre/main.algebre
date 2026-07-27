@@ -1,0 +1,13 @@
+include "./algebre/ensembles.algebre"
+include "./algebre/applications.algebre"
+
+
+goal 
+var forall A : set;
+    exists x : element;
+begin
+  A != Phi => in(x, A);
+end    
+
+
+end.

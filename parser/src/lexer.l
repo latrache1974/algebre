@@ -31,6 +31,13 @@
 "begin"                  { return yy::Parser::make_BEGIN_(driver.location); }
 "goal"                    { return yy::Parser::make_GOAL(driver.location); }
 
+"any"                    { return yy::Parser::make_ANY(driver.location); }
+"return"                 { return yy::Parser::make_RETURN(driver.location); }
+"true"                   { return yy::Parser::make_TRUE(driver.location); }
+"false"                  { return yy::Parser::make_FALSE(driver.location); }
+"depends"                { return yy::Parser::make_DEPENDS(driver.location); }
+"extend"                 { return yy::Parser::make_EXTEND(driver.location); }
+
 "not"                    { return yy::Parser::make_NOT(driver.location); }
 "or"                     { return yy::Parser::make_OR(driver.location); }
 "and"                    { return yy::Parser::make_AND(driver.location); }
@@ -90,9 +97,22 @@ void Driver::scan_begin()
     if (!has_bom)
         fseek(yyin, 0, SEEK_SET);   // pas de BOM : on revient au tout début
     // sinon on laisse le curseur juste après le BOM (3 octets sautés)
+
+    // IMPORTANT : on EMPILE ce buffer au lieu d'écraser bêtement yyin.
+    // Le lexer généré par Flex n'est pas réentrant : yyin et le buffer
+    // courant sont des variables GLOBALES partagées par toutes les
+    // instances de Driver. Avec "include", un Driver peut démarrer un
+    // nouveau scan_begin() alors qu'un autre Driver (le fichier parent)
+    // est encore en plein milieu de sa lecture. Réassigner yyin
+    // directement écrasait le buffer du parent ; yypush_buffer_state
+    // le préserve sur une pile, pour qu'on puisse y revenir après.
+    yypush_buffer_state(yy_create_buffer(yyin, YY_BUF_SIZE));
 }
 
 void Driver::scan_end()
 {
     fclose(yyin);
+    // Dépile : restaure automatiquement le buffer (et donc yyin) du
+    // fichier parent, exactement là où il en était.
+    yypop_buffer_state();
 }
