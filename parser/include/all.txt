@@ -1,0 +1,499 @@
+#ifndef CORPS_H
+#define CORPS_H
+using namespace std;
+#include"Predicat.h"
+#include"Predicats.h"
+
+class Corps
+{
+    public:
+        Predicat *left, *right, *sentence;
+        bool eq;
+        Corps();
+        virtual ~Corps();
+        void Assign(Predicat * ,string ,Predicat * );
+        void Assign(Predicat * );
+
+    protected:
+
+    private:
+};
+
+class CorpsM
+{
+    public:
+        Predicat *left, *right;
+        Predicats *sentences;
+        bool eq;
+        CorpsM();
+        void Assign(Predicat * ,string ,Predicats * );
+        void Assign(Predicat * ,string ,Predicat * );
+        void Assign(Predicats * );
+        virtual ~CorpsM();
+
+    protected:
+
+    private:
+};
+
+#endif // CORPS_H
+#ifndef FUNCTION_H
+#define FUNCTION_H
+using namespace std;
+#include<string>
+#include"Notation.h"
+#include"Parameters.h"
+#include"Predicat.h"
+#include"Variables.h"
+#include"Corps.h"
+
+class Function
+{
+    public:
+        string name;
+        Notation *notation;
+        Parameters *params;
+        Variables *Vars;
+        Predicat *cond, *sentence;
+        Function();
+        virtual ~Function();
+        void AssignFromDoubleIdentList(Parameters *);
+        void AssignFromCorps(Corps *);
+
+    protected:
+
+    private:
+};
+
+class Functions
+{
+    public:
+      vector<Function> Items;
+      Functions();
+      virtual ~Functions();
+};
+
+#endif // FUNCTION_H
+#ifndef GOAL_H
+#define GOAL_H
+
+using namespace std;
+#include"Variables.h"
+#include"Predicats.h"
+#include"Corps.h"
+
+class Goal
+{
+    public:
+        Variables *Vars;
+        Predicats *conds, *sentences;
+        Goal();
+        virtual ~Goal();
+        void AssignFromCorpsM(CorpsM *);
+
+    protected:
+
+    private:
+};
+
+#endif // GOAL_H
+#ifndef LITERAL_H
+#define LITERAL_H
+
+using namespace std;
+#include<string>
+#include"Notation.h"
+#include"Variables.h"
+#include"Corps.h"
+
+class Literal
+{
+    public:
+        string type;
+        Notation *notation;
+        Variables *Vars;
+        Predicat *cond, *sentence;
+        Literal();
+        virtual ~Literal();
+        void AssignFromCorps(Corps *);
+
+    protected:
+
+    private:
+};
+
+class Literals
+{
+    public:
+    vector <Literal> Items;
+    Literals();
+    virtual ~Literals();
+};
+
+#endif // LITERAL_H
+#ifndef NAMESPACELIST_H
+#define NAMESPACELIST_H
+
+using namespace std;
+#include<string>
+#include<vector>
+
+class NameSpaceList
+{
+    public:
+        vector<string> Items;
+        NameSpaceList();
+        virtual ~NameSpaceList();
+        void Add(string );
+
+    protected:
+
+    private:
+};
+
+#endif // NAMESPACELIST_H
+#ifndef NODE_H
+#define NODE_H
+using namespace std;
+#include<string>
+#include<vector>
+
+enum NodeType { ntTerminal, ntFunction, ntOperator};
+enum OperatorType1 { otNot};
+enum OperatorType2 { otAnd, otOr, otXor, otEq, otNeq};
+
+class Node
+{
+    public:
+        NodeType nodeType;
+        virtual ~Node() = default;
+    protected:
+
+    private:
+};
+
+class NodeTerminal : public Node
+{
+    public:
+        string ident;
+        NodeTerminal();
+        virtual ~NodeTerminal();
+    protected:
+
+    private:
+};
+
+class NodeFunction : public Node
+{
+    public:
+        string ident;
+        vector <Node> *params;
+        NodeFunction();
+        virtual ~NodeFunction();
+    protected:
+
+    private:
+};
+
+class NodeOperator2 : public Node
+{
+    public:
+        OperatorType2 op;
+        Node *left, *right;
+        NodeOperator2();
+        virtual ~NodeOperator2();
+    protected:
+
+    private:
+};
+
+class NodeOperator1 : public Node
+{
+    public:
+        OperatorType1 op;
+        Node *node;
+        NodeOperator1();
+        virtual ~NodeOperator1();
+    protected:
+
+    private:
+};
+
+#endif // NODE_H
+#ifndef NOTATION_H
+#define NOTATION_H
+
+using namespace std;
+#include<string>
+#include"NameSpaceList.h"
+
+class Notation
+{
+    public:
+        string format;
+        NameSpaceList *params;
+        Notation();
+        virtual ~Notation();
+
+    protected:
+
+    private:
+};
+
+#endif // NOTATION_H
+#ifndef PARAMETERS_H
+#define PARAMETERS_H
+
+using namespace std;
+#include<string>
+#include<vector>
+
+class Parameter{
+    string type, ident;
+};
+
+class Parameters
+{
+    public:
+        vector<Parameter> Items;
+        Parameters();
+        virtual ~Parameters();
+        void Add(string ,string );
+
+    protected:
+
+    private:
+};
+
+#endif // PARAMETERS_H
+#ifndef PREDICAT_H
+#define PREDICAT_H
+using namespace std;
+#include<string>
+#include<vector>
+#include"Node.h"
+
+class Predicat
+{
+    public:
+        Node *Axiom;
+        Predicat();
+        virtual ~Predicat();
+        void CopyFrom(Predicat *);
+
+    protected:
+
+    private:
+};
+
+#endif // PREDICAT_H
+#ifndef PREDICATS_H
+#define PREDICATS_H
+using namespace std;
+#include<string>
+#include<vector>
+#include"Predicat.h"
+
+class Predicats
+{
+    public:
+        vector<Predicat> Items;
+        Predicats();
+        virtual ~Predicats();
+        void Add(Predicat *);
+
+    protected:
+
+    private:
+};
+
+#endif // PREDICATS_H
+#ifndef THEOREME_H
+#define THEOREME_H
+
+using namespace std;
+
+#include"Parameters.h"
+#include"Variables.h"
+#include"Predicats.h"
+#include"Corps.h"
+
+class Theoreme
+{
+    public:
+        string name;
+        Parameters *params;
+        Variables *Vars;
+        Predicat *cond;
+        Predicats *sentences;
+        Theoreme();
+        virtual ~Theoreme();
+        void AssignFromDoubleIdentList(Parameters *);
+        void AssignFromCorpsM(CorpsM *);
+
+    protected:
+
+    private:
+};
+
+class Theoremes
+{
+    public:
+    vector <Theoreme> Items;
+    Theoremes();
+    virtual ~Theoremes();
+};
+
+#endif // THEOREME_H
+#ifndef TYPE_H
+#define TYPE_H
+using namespace std;
+#include<string>
+#include"Notation.h"
+#include"Parameters.h"
+#include"Variables.h"
+#include"Corps.h"
+
+class Type
+{
+    public:
+        string name;
+        Notation *notation;
+        Parameters *params;
+        Variables *Vars;
+        Predicat *cond, *sentence;
+        Type();
+        virtual ~Type();
+        void AssignFromDoubleIdentList(Parameters *);
+        void AssignFromCorps(Corps *);
+
+    protected:
+
+    private:
+};
+
+class Types
+{
+    public:
+      vector<Type> Items;
+      Types();
+      virtual ~Types();
+};
+
+#endif // TYPE_H
+#ifndef UNIVERSEBASE_H
+#define UNIVERSEBASE_H
+
+#include"Type.h"
+#include"Function.h"
+#include"Literal.h"
+#include"Theoreme.h"
+#include"Goal.h"
+#include"WorkPlan.h"
+
+class UniverseBase
+{
+    public:
+        Types *types;
+        Functions *functions;
+        Literals *literals;
+        Theoremes *theoremes;
+        Goal *goal;
+        WorkPlan *plan;
+        UniverseBase();
+        virtual ~UniverseBase();
+        bool Parse(string ,string *);
+        void AddType(Type *);
+        void AddFunction(Function *);
+        void AddLiteral(Literal *);
+        void AddTheoreme(Theoreme *);
+        void SetGoal(Goal *);
+    protected:
+
+    private:
+};
+
+extern UniverseBase *universe;
+
+#endif // UNIVERSEBASE_H
+#ifndef UTILS_H
+#define UTILS_H
+
+using namespace std;
+#include<string>
+#include"Predicat.h"
+#include"Predicats.h"
+
+class Utils
+{
+    public:
+        Utils();
+        virtual ~Utils();
+        static Predicat *CreateNot(Predicat *);
+        static Predicat *CreateOr(Predicat *, Predicat *);
+        static Predicat *CreateAnd(Predicat *, Predicat *);
+        static Predicat *CreateXor(Predicat *, Predicat *);
+        static Predicat *CreateFunction(string , Predicats*);
+        static Predicat *CreateTerminal(string );
+        static Predicat *CreateAppartient(string , string );
+        static Predicat *CreateRelation(string , string );
+        static void PerformeInclude(string );
+    protected:
+
+    private:
+};
+
+
+#endif // UTILS_H
+#ifndef VARIABLES_H
+#define VARIABLES_H
+
+using namespace std;
+#include<string>
+#include<vector>
+#include"Predicat.h"
+
+
+enum Quantifier { _A, _E, _Eu};
+
+class Variable {
+  Quantifier q;
+  string ident, type;
+  Predicat *p;
+};
+
+class Variables
+{
+    public:
+        vector <Variable> Items;
+        Variables();
+        virtual ~Variables();
+        void Add(string ,string ,string );
+
+    protected:
+
+    private:
+};
+
+#endif // VARIABLES_H
+#ifndef WORKPLAN_H
+#define WORKPLAN_H
+
+using namespace std;
+#include"Variables.h"
+#include"Predicats.h"
+
+class WorkPlan
+{
+    public:
+        Variables *Vars;
+        Predicats *predicats;
+        WorkPlan();
+        virtual ~WorkPlan();
+
+    protected:
+
+    private:
+};
+
+#endif // WORKPLAN_H

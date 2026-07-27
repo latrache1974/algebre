@@ -1,0 +1,36 @@
+/* Liste de prédicats séparés par des barres verticales PIPE */
+Predicats : Predicats2 {$$=$1;}
+          | /* vide */ {$$=new Predicats();}
+          ;
+
+/* FIX : même bug d'initialisation que les autres listes. */
+Predicats2 : Predicat PIPE Predicats {$$=$3; $$->Add($1);}
+          | Predicat {$$=new Predicats(); $$->Add($1);}
+          ;
+
+Predicat1 : Atom {$$=$1;}
+          | Predicat {$$=$1;}
+          ;
+
+Predicat : NOT Predicat  {$$=Utils::CreateNot($2);}
+         | Predicat OR Predicat {$$=Utils::CreateOr($1,$3);}
+         | Predicat AND Predicat {$$=Utils::CreateAnd($1,$3);}
+         | Predicat XOR Predicat {$$=Utils::CreateXor($1,$3);}
+         | LPAREN Atom RPAREN {$$=$2;}
+         | LPAREN Atom EQ Atom RPAREN {$$=Utils::CreateEq($2,$4);}
+         | LPAREN Atom NEQ Atom RPAREN {$$=Utils::CreateNEq($2,$4);};
+
+Atom : IDENT LPAREN Atoms RPAREN  {$$=Utils::CreateFunction($1,$3);}
+     | IDENT {$$=Utils::CreateTerminal($1);}
+     | APPARTIENT LPAREN IDENT COMMA IDENT RPAREN {$$=Utils::CreateAppartient($3,$5);}
+     | RELATION LPAREN IDENT COMMA IDENT RPAREN {$$=Utils::CreateRelation($3,$5);}
+     ;
+
+/* FIX important : Utils::CreateFunction attend un Predicats* comme
+   2e argument (voir Utils.h : CreateFunction(string, Predicats*)).
+   La règle Atoms doit donc construire un Predicats*, pas un type
+   "Atoms" à part, et $$ doit être initialisé comme pour les autres
+   listes récursives à droite. */
+Atoms : Atom COMMA Atoms {$$=$3; $$->Add($1);}
+      | Atom {$$=new Predicats(); $$->Add($1);}
+      ;

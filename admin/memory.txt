@@ -1,0 +1,26 @@
+Built-In:
+---------
+    - not, and , or, xor
+    - =>, <=>
+    - appartient
+    - Element
+    - Ensemble
+    - Relations
+    - Uplet(int )
+    - _A
+    - _E
+    - _E!
+    - Types
+    - Functions peuvent renvoiyer un litereaux
+    - Théorèmes
+    - = de même type
+    - != de même type
+    
+A développer:
+-------------
+    - Inclus
+    - Applications
+    - Notations Uplets, Functions, Types ...
+    - _A var:
+        - var à des conditions
+        - var dépond d'autres vars.

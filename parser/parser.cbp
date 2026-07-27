@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="parser" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="algebre_out" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+				<ExtraCommands>
+					<Add before="bison -d src/parser.yy" />
+					<Add before="flex -o lex.yy.cc src/lexer.l" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="algebre_out" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="src" />
+		</Compiler>
+		<ExtraCommands>
+			<Add before="cd src &amp;&amp; bison -d parser.yy" />
+			<Add before="cd src &amp;&amp; flex lexer.l" />
+		</ExtraCommands>
+		<Unit filename="include/Corps.h" />
+		<Unit filename="include/Function.h" />
+		<Unit filename="include/Goal.h" />
+		<Unit filename="include/Literal.h" />
+		<Unit filename="include/NameSpaceList.h" />
+		<Unit filename="include/Node.h" />
+		<Unit filename="include/Notation.h" />
+		<Unit filename="include/Parameters.h" />
+		<Unit filename="include/Predicat.h" />
+		<Unit filename="include/Predicats.h" />
+		<Unit filename="include/Theoreme.h" />
+		<Unit filename="include/Type.h" />
+		<Unit filename="include/UniverseBase.h" />
+		<Unit filename="include/Utils.h" />
+		<Unit filename="include/Variables.h" />
+		<Unit filename="include/WorkPlan.h" />
+		<Unit filename="include/lexer.hh" />
+		<Unit filename="lex.yy.cc" />
+		<Unit filename="main.cpp" />
+		<Unit filename="parser.tab.cc" />
+		<Unit filename="src/Corps.cpp" />
+		<Unit filename="src/Function.cpp" />
+		<Unit filename="src/Goal.cpp" />
+		<Unit filename="src/Literal.cpp" />
+		<Unit filename="src/NameSpaceList.cpp" />
+		<Unit filename="src/Node.cpp" />
+		<Unit filename="src/Notation.cpp" />
+		<Unit filename="src/Parameters.cpp" />
+		<Unit filename="src/Predicat.cpp" />
+		<Unit filename="src/Predicats.cpp" />
+		<Unit filename="src/Theoreme.cpp" />
+		<Unit filename="src/Type.cpp" />
+		<Unit filename="src/UniverseBase.cpp" />
+		<Unit filename="src/Utils.cpp" />
+		<Unit filename="src/Variables.cpp" />
+		<Unit filename="src/WorkPlan.cpp" />
+		<Unit filename="src/driver.cpp" />
+		<Unit filename="src/driver.hh" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

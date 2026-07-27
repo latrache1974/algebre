@@ -1,0 +1,35 @@
+literal Phi : set;
+notation "∅";
+var forall x : element;
+begin
+  not in(x, Phi);
+end
+
+function inclus(set A, set B);
+notation "%0 ∈ %1" instance.p0, instance.p1;
+var forall x : element;
+begin
+  in(x, A) => in(x,B);
+end
+
+type lci(application l, set A);
+notation "%0" instance.name;
+var forall x : element, in(x, A);
+    forall y : element, in(y, A);
+begin
+   in(l(x,y), A);
+end
+
+theoreme "Récursivité de l'inclusion" (set A, set B, set C);
+begin
+  inclus(A, B) and inclus(B, C) => inclus(A, C);
+end  
+
+goal 
+var forall A : set;
+    exists x : element;
+begin
+  A != Phi => in(x, A);
+end    
+
+end.

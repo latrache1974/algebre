@@ -1,0 +1,116 @@
+
+function application(set A, set B);
+notation "%0", instance.name;
+var _A x1 element, appartient(x1, A);
+    _A x2 element, appartient(x2, A);
+    _A y element, appartient(y, B);
+begin
+  relation(x1,y) and relation(x2,y) => x1=x2;
+end;
+
+type lci(application l, set A);
+notation "%0", instance.name;
+var _A x element, appartient(x, A);
+    _A y element, appartient(y, A);
+begin
+  => appartient(l(x,y), A);
+end;
+
+literal  : set;
+notation "∅"
+var _A x element;
+begin
+  => not appartient(x, ∅);
+end
+
+theoreme "Récursivité de l'inclusion" (set A, set B, set C);
+begin
+  inclus(A, B) and inclus(B, C) => inclus(A, C);
+end  
+
+goal 
+var _A A set;
+    _E x element;
+begin
+  A != ∅ => appartient(c, A);
+end    
+
+---------------------------------------------------------------------------------------------------------
+
+Mots réservés:
+--------------
+  - type
+  - notation
+  - function 
+  - goal
+  - literal
+  - (,)
+  - ,
+  - ;
+  - ident
+  - _A, _E, _E!
+  - element, set, relation, appartient
+  - unicode C++ string
+  - namespace
+  - begin, end
+  - =>
+  - <=>
+  - =, !=
+
+Syntaxe:
+--------
+    S : IncludeSection Algebre;
+    IncludeSection : "include" string ";"
+                   |;  
+    Algebre : TypeDefinition Algebre
+      | FunctionDefinition Algebre
+      | LiteralDefinition Algebre
+      | TheoremeDefinition Algebre
+      | GoalDefinition "end" ".";
+    TypeDefinition : "type" ident "(" DoubleIdentList ")" ";" NotationDefinition VariablesDefinitions Corps 
+    LiteralDefinition : "literal" ":" ident ";" NotationDefinition VariablesDefinitions Corps 
+    FunctionDefinition : "function" ident "(" DoubleIdentList ")" ";" NotationDefinition VariablesDefinitions Corps 
+    TheoremeDefinition : "theoreme" string "(" DoubleIdentList ")" ";" VariablesDefinitions CorpsM
+    GoalDefinition : VariablesDefinitions CorpsM;
+    NotationDefinition : "notation" string NameSpaceList ";"
+                       | ;
+    NameSpaceList : "," namespace NameSpaceList
+                  | namespace;
+    DoubleIdentList : DoubleIdentList1
+                    | ;
+    DoubleIdentList1 : ident ident "," DoubleIdentList1
+                    | ident ident;
+    VariablesDefinitions : "var" VariablesDefinitions1
+                         | ;
+
+    VariablesDefinitions1 : Quantifier ident ident ";" VariablesDefinitions1
+                         | Quantifier ident ident ";";
+    Quantifier : "_A" | "_E" | "_E!" ;
+    Corps : Predicat1 "=>" Predicats1 ";"
+          | Predicat1 "<=>" Predicat1 ";"
+          | Predicat1 ";" ;
+    CorpsM : Predicat1 "=>" Predicats ";"
+          | Predicat1 "<=>" Predicat1 ";"
+          | Predicats ";" ;
+    Predicats : Predicat "|" Predicats
+              | Predicat;      
+    Predicat1 : Atom
+              | Predicat;       
+             
+    Predicat : "not" Predicat      
+             | Predicat "or" Predicat 
+             | Predicat "and" Predicat 
+             | Predicat "xor" Predicat
+         | "(" Atom ")";
+    Atom : ident "(" Atoms ")"
+         | ident
+         | "appartient" "(" ident "," ident ")"
+         | "relation" "(" ident "," ident ")";
+    Atoms : Atom "," Atoms
+          | ;     
+             
+
+
+
+
+
