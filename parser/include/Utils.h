@@ -6,6 +6,7 @@ using namespace std;
 #include"Predicat.h"
 #include"Predicats.h"
 #include"UniverseBase.h"
+#include"UniverseProductionsBase.h"
 
 class Utils
 {

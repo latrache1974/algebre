@@ -15,6 +15,7 @@ class Literal
         Notation *notation;
         Variables *Vars;
         Predicat *cond, *sentence;
+        bool eq;
         Literal();
         virtual ~Literal();
         void AssignFromCorps(Corps *);

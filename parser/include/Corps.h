@@ -8,11 +8,12 @@ class Corps
 {
     public:
         Predicat *left, *right, *sentence;
-        string type;
+        bool eq;
         Corps();
         virtual ~Corps();
-        void Assign(Predicat * ,string ,Predicat * );
-        void Assign(Predicat * );
+        void Assign(Predicat * ,bool ,Predicat * );
+        void AssignLeft(Predicat * );
+        void AssignRight(Predicat * );
 
     protected:
 
@@ -24,10 +25,10 @@ class CorpsM
     public:
         Predicat *left, *right;
         Predicats *sentences;
-        string type;
+        bool eq;
         CorpsM();
-        void Assign(Predicat * ,string ,Predicats * );
-        void Assign(Predicat * ,string ,Predicat * );
+        void Assign(Predicat * ,bool ,Predicats * );
+        void Assign(Predicat * ,bool ,Predicat * );
         void Assign(Predicats * );
         virtual ~CorpsM();
 
@@ -41,9 +42,9 @@ class CorpsMM
     public:
         Predicats *conds;
         Predicats *sentences;
-        string type;
+        bool eq;
         CorpsMM();
-        void Assign(Predicats * ,string ,Predicats * );
+        void Assign(Predicats * ,bool ,Predicats * );
         void Assign(Predicats * );
         virtual ~CorpsMM();
 

@@ -13,6 +13,7 @@ class WorkPlan
         WorkPlan();
         virtual ~WorkPlan();
         void ExportToAlgebre(string filename);
+        string ToAlgebre();
 
     protected:
 

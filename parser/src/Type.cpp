@@ -31,13 +31,10 @@ void Type::AssignFromDoubleIdentList(Parameters *ps)
 
 void Type::AssignFromCorps(Corps *c)
 {
-  if ((  c->type=="=>" ) || ( c->type=="<=>" ) )
-   {
-     cond=c->left->Copy();
-     sentence=c->right->Copy();
-   }
-  if ( c->type=="sentence" )
-     sentence=c->sentence->Copy();
+  if ( c->left )
+    cond=c->left->Copy();
+  if ( c->right )
+    sentence=c->right->Copy();
   delete c;
 }
 

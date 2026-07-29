@@ -13,7 +13,8 @@ class Predicat
         virtual ~Predicat();
         Predicat *Copy();
         string ToAlgebre();
-
+        static Predicat * And(Predicat *, Predicat *);
+        static Predicat * Or(Predicat *, Predicat *);
     protected:
 
     private:

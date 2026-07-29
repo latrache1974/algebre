@@ -4,8 +4,7 @@ Corps::Corps()
 {
         left=NULL;
         right=NULL;
-        sentence=NULL;
-        type="";
+        eq=false;
 }
 
 Corps::~Corps()
@@ -14,21 +13,25 @@ Corps::~Corps()
       delete left;
     if (right)
       delete right;
-    if (sentence)
-      delete sentence;
 }
 
-void Corps::Assign(Predicat * l,string t,Predicat * r)
+void Corps::Assign(Predicat * l,bool e,Predicat * r)
 {
    left=l;
    right=r;
-   type=t;
+   eq=e;
 }
 
-void Corps::Assign(Predicat *p)
+void Corps::AssignRight(Predicat *p)
 {
-  sentence=p;
-  type="sentence";
+  right=p;
+  eq=false;
+}
+
+void Corps::AssignLeft(Predicat *p)
+{
+  left=p;
+  eq=false;
 }
 
 
@@ -49,23 +52,23 @@ CorpsM::~CorpsM()
       delete sentences;
 }
 
-void CorpsM::Assign(Predicat *l,string t,Predicats *ps)
+void CorpsM::Assign(Predicat *l,bool e,Predicats *ps)
 {
+        eq=e;
         left=l;
-        type=t;
         sentences=ps;
 }
 
-void CorpsM::Assign(Predicat * l,string t,Predicat * r)
+void CorpsM::Assign(Predicat * l,bool e,Predicat * r)
 {
         left=l;
         right=r;
-        type=t;
+        eq=e;
 }
 
 void CorpsM::Assign(Predicats *ps)
 {
-  type="sentences";
+  eq=false;
   sentences=ps;
 }
 //////////////////////////////////////////////////////////////////////
@@ -74,7 +77,7 @@ CorpsMM::CorpsMM()
 {
         conds=NULL;
         sentences=NULL;
-        type="";
+        eq=false;
 }
 
 CorpsMM::~CorpsMM()
@@ -85,15 +88,15 @@ CorpsMM::~CorpsMM()
       delete sentences;
 }
 
-void CorpsMM::Assign(Predicats *l,string t,Predicats *ps)
+void CorpsMM::Assign(Predicats *l,bool e,Predicats *ps)
 {
         conds=l;
-        type=t;
+        eq=e;
         sentences=ps;
 }
 
 void CorpsMM::Assign(Predicats *ps)
 {
-  type="sentences";
+  eq=false;
   sentences=ps;
 }

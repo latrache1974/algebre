@@ -6,6 +6,7 @@ using namespace std;
 Literal::Literal()
 {
         type="";
+        eq=false;
         name="";
         notation=NULL;
         Vars=NULL;
@@ -27,13 +28,18 @@ Literal::~Literal()
 
 void Literal::AssignFromCorps(Corps *c)
 {
-  if ((  c->type=="=>" ) || ( c->type=="<=>" ) )
+   eq=c->eq;
+   if ( eq )
    {
-     cond=c->left->Copy();
-     sentence=c->right->Copy();
+       sentence=NULL;
+       cond=Predicat::Or(c->left, c->right);
+       delete c;
+       return;
    }
-  else if ( c->type=="sentence" )
-     sentence=c->sentence->Copy();
+   if ( c->left )
+       cond=c->left->Copy();
+   if ( c->right )
+     sentence=c->right->Copy();
   delete c;
 }
 

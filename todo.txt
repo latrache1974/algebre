@@ -3,7 +3,7 @@
     *- any, return
     *- Types doivent avoir un type de base  ex:application extend relation(..) | ident !!!
     *- Atom peut être NAMESPACE
+    *- Types: sentence <> cond
     - Erreur sémentiques
-    - Types: sentence <> cond
     - notation applications, relations... f(x), f(A) ...
     - Builtins relations.A relations.B

@@ -7,8 +7,8 @@ string AlgebreSourceDirectory="../../../parser/algebre/";
 
 WorkPlan::WorkPlan()
 {
-  Vars=new Variables();
-  predicats=new Predicats();
+  Vars=NULL;
+  predicats=NULL;
 }
 
 WorkPlan::~WorkPlan()
@@ -37,8 +37,6 @@ void WorkPlan::ExportToAlgebre(string filename)
   ofstream out(filename.c_str());
   if (!out)
     return;
-
-  out << "goal" << endl;
 
   if (Vars && Vars->Items.size()>0)
   {
@@ -77,4 +75,41 @@ void WorkPlan::ExportToAlgebre(string filename)
   out << "end." << endl;
 
   out.close();
+}
+
+string WorkPlan::ToAlgebre()
+{
+  string r="";
+  if (Vars && Vars->Items.size()>0)
+  {
+    r += "var ";
+    for (size_t i=0; i<Vars->Items.size(); i++)
+    {
+      Variable *v=Vars->Items[i];
+      if (i>0)
+        r +=  "    ";
+      r +=  QuantifierToString(v->q) + " " + v->ident + " : " + v->type;
+      if (v->p)
+        r +=  ", " + v->p->ToAlgebre();
+      if ( v->depends )
+          {
+            r +=  " depends " + v->depends->ToAlgebre();
+          }
+      r +=  ";\n" ;
+    }
+  }
+
+  r +=  "begin\n  ";
+  if (predicats && predicats->Items.size()>0)
+  {
+    for (size_t i=0; i<predicats->Items.size(); i++)
+    {
+      if (i>0)
+        r +=  " |\n" ;
+      r +=  "  " + predicats->Items[i]->ToAlgebre();
+    }
+    r +=  ";\n" ;
+  }
+  r +=  "end.\n" ;
+  return r;
 }

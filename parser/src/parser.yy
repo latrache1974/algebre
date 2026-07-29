@@ -234,19 +234,20 @@ DependsList : IDENT COMMA DependsList {$$=$3; $$->Add($1);}
             ;
 
 /* Version mise à jour de Corps */
-Corps : BEGIN_ Predicat ARROW_IMPLIES Predicat SEMI END { $$=new Corps(); $$->Assign($2, "=>", $4);}
-      | BEGIN_ Predicat ARROW_EQUIV Predicat SEMI END { $$=new Corps(); $$->Assign($2, "<=>", $4);}
-      | BEGIN_ Predicat SEMI  END { $$=new Corps(); $$->Assign($2);}
+Corps : BEGIN_ Predicat ARROW_IMPLIES Predicat SEMI END { $$=new Corps(); $$->Assign($2, false, $4);}
+      | BEGIN_ Predicat ARROW_EQUIV Predicat SEMI END { $$=new Corps(); $$->Assign($2, true, $4);}
+      | BEGIN_ Predicat SEMI  END { $$=new Corps(); $$->AssignLeft($2);}
+      | BEGIN_          ARROW_IMPLIES Predicat SEMI END { $$=new Corps(); $$->AssignRight($3);}
       ;
 
 /* Version specifique aux Théorèmes et Objectifs */
 CorpsM : BEGIN_ Predicat ARROW_IMPLIES Predicats SEMI END {
             $$=new CorpsM();
-            $$->Assign($2, "=>", $4);
+            $$->Assign($2, false, $4);
             }
        | BEGIN_ Predicat ARROW_EQUIV Predicat SEMI END {
             $$=new CorpsM();
-            $$->Assign($2, "<=>", $4);
+            $$->Assign($2, true, $4);
             }
 
        | BEGIN_ Predicats SEMI  END {
@@ -255,7 +256,7 @@ CorpsM : BEGIN_ Predicat ARROW_IMPLIES Predicats SEMI END {
        ;
 CorpsMM : BEGIN_ Predicats ARROW_IMPLIES Predicats SEMI END {
             $$=new CorpsMM();
-            $$->Assign($2, "=>", $4);
+            $$->Assign($2, false, $4);
             }
        | BEGIN_ Predicats SEMI  END {
             $$=new CorpsMM();

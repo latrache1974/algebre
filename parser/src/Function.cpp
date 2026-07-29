@@ -31,15 +31,19 @@ void Function::AssignFromDoubleIdentList(Parameters *ps)
 
 void Function::AssignFromCorps(Corps *c)
 {
-  if ( ( c->type=="=>" ) || ( c->type=="<=>") )
+    if ( c->eq )
     {
-    cond=c->left->Copy();
-    sentence=c->right->Copy();
+        sentence=NULL;
+        cond=Predicat::Or(c->left, c->right);
+        eq=c->eq;
+        delete c;
+        return;
     }
-  if ( ( c->type=="sentence" )  )
-    {
-    sentence=c->sentence->Copy();
-    }
+    if ( c->left )
+      cond=c->left->Copy();
+    if ( c->right )
+      sentence=c->right->Copy();
+  eq=c->eq;
   delete c;
 }
 

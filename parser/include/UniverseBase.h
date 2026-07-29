@@ -28,12 +28,12 @@ class UniverseBase
         void CopyFrom(UniverseBase *);
         void ExportToFile(string filename);
         string ToAlgebre();
+        void PerformeEq();
     protected:
 
     private:
 };
 
-extern UniverseBase *universe;
 extern string AlgebreSourceDirectory;
 
 #endif // UNIVERSEBASE_H

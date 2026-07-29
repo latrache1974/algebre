@@ -5,8 +5,6 @@ using namespace std;
 #include<fstream>
 #include "driver.hh"
 
-UniverseBase *universe;
-
 UniverseBase::UniverseBase()
 {
         types=new Types();
@@ -150,3 +148,4 @@ string UniverseBase::ToAlgebre()
   r += "end.\n";
   return r;
 }
+

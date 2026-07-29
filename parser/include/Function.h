@@ -15,6 +15,7 @@ class Function
         Notation *notation;
         Parameters *params;
         Variables *Vars;
+        bool eq;
         Predicat *cond, *sentence;
         Function();
         virtual ~Function();
