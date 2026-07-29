@@ -17,6 +17,7 @@ class Variable {
   Predicat *p;
   NameSpaceList *depends;
   Variable *Copy();
+  static string QuantifierToAlgebre(Quantifier q);
 };
 
 class Variables
@@ -29,6 +30,7 @@ class Variables
         void Add(string ,string ,string ,Predicat *);
         void Add(string ,string ,string ,Predicat *,NameSpaceList *);
         Variables *Copy();
+        string ToAlgebre();
 
     protected:
 

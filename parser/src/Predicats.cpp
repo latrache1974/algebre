@@ -22,3 +22,15 @@ Predicats *Predicats::Copy()
     r->Items.push_back(Items[i]->Copy());
   return r;
 }
+
+string Predicats::ToAlgebre()
+{
+  string r = "";
+  for (size_t i = 0; i < Items.size(); i++)
+  {
+    if (i > 0)
+      r += " | ";
+    r += Items[i]->ToAlgebre();
+  }
+  return r;
+}

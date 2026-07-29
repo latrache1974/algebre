@@ -13,6 +13,7 @@ class NameSpaceList
         virtual ~NameSpaceList();
         void Add(string );
         NameSpaceList *Copy();
+        string ToAlgebre();
 
     protected:
 

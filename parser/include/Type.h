@@ -21,6 +21,7 @@ class Type
         void AssignFromDoubleIdentList(Parameters *);
         void AssignFromCorps(Corps *);
         Type *Copy();
+        string ToAlgebre();
 
     protected:
 
@@ -33,6 +34,7 @@ class Types
       vector<Type*> Items;
       Types();
       virtual ~Types();
+      Type *GetFromName(string );
 };
 
 #endif // TYPE_H

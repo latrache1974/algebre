@@ -1,3 +1,5 @@
 *.o
 *.cc
 parser_out
+AlgebraSystem
+*

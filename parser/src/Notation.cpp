@@ -15,3 +15,13 @@ Notation *Notation::Copy()
   r->params=params->Copy();
   return r;
 }
+
+string Notation::ToAlgebre()
+{
+  string r = "notation \"" + format + "\"";
+  string ns = params->ToAlgebre();
+  if (ns != "")
+    r += " " + ns;
+  r += ";\n";
+  return r;
+}

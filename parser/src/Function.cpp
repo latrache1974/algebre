@@ -50,3 +50,28 @@ Functions::Functions()
 Functions::~Functions()
 {
 }
+
+string Function::ToAlgebre()
+{
+  string r = "function " + name;
+  if (params)
+    r +=  "(" + params->ToAlgebre() + ");\n";
+  r += notation->ToAlgebre();
+  if ( Vars )
+    r += Vars->ToAlgebre();
+  r += "begin\n  ";
+  if (cond)
+    r += cond->ToAlgebre() +  " => ";
+  if (sentence)
+    r += sentence->ToAlgebre() + ";\n";
+  r += "end\n";
+  return r;
+}
+
+Function *Functions::GetFromName(string name)
+{
+  for(size_t i=0; i<Items.size(); i++)
+    if ( Items[i]->name == name )
+      return Items[i];
+  return NULL;
+}

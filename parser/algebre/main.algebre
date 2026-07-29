@@ -1,6 +1,6 @@
-include "./algebre/relations.algebre"
-include "./algebre/ensembles.algebre"
-include "./algebre/applications.algebre"
+include "relations.algebre"
+include "ensembles.algebre"
+include "applications.algebre"
 
 
 goal 

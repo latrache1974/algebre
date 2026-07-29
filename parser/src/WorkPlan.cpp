@@ -3,6 +3,8 @@
 using namespace std;
 #include<fstream>
 
+string AlgebreSourceDirectory="../../../parser/algebre/";
+
 WorkPlan::WorkPlan()
 {
   Vars=new Variables();
@@ -48,7 +50,7 @@ void WorkPlan::ExportToAlgebre(string filename)
         out << "    ";
       out << QuantifierToString(v->q) << " " << v->ident << " : " << v->type;
       if (v->p)
-        out << ", " << v->p->ToString();
+        out << ", " << v->p->ToAlgebre();
       if ( v->depends )
           {
             out << " depends ";
@@ -68,7 +70,7 @@ void WorkPlan::ExportToAlgebre(string filename)
     {
       if (i>0)
         out << " |" << endl;
-      out << "  " << predicats->Items[i]->ToString();
+      out << "  " << predicats->Items[i]->ToAlgebre();
     }
     out << ";" << endl;
   }

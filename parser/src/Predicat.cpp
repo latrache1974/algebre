@@ -17,7 +17,7 @@ Predicat *Predicat::Copy()
   return r;
 }
 
-string Predicat::ToString()
+string Predicat::ToAlgebre()
 {
   return Axiom->ToString();
 }

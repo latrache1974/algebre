@@ -14,6 +14,7 @@ class Goal
         Goal();
         virtual ~Goal();
         void AssignFromCorpsMM(CorpsMM *);
+        string ToAlgebre();
 
     protected:
 

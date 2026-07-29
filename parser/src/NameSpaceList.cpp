@@ -20,3 +20,15 @@ NameSpaceList *NameSpaceList::Copy()
     r->Add(Items[i]);
   return r;
 }
+
+string NameSpaceList::ToAlgebre()
+{
+  string r = "";
+  for (size_t i = 0; i < Items.size(); i++)
+  {
+    if (i > 0)
+      r += ",";
+    r += Items[i];
+  }
+  return r;
+}

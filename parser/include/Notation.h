@@ -13,6 +13,7 @@ class Notation
         Notation();
         virtual ~Notation();
         Notation *Copy();
+        string ToAlgebre();
 
     protected:
 

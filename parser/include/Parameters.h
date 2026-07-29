@@ -19,6 +19,7 @@ class Parameters
         virtual ~Parameters();
         void Add(string ,string );
         Parameters *Copy();
+        string ToAlgebre();
 
     protected:
 

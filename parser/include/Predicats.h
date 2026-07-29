@@ -13,6 +13,7 @@ class Predicats
         virtual ~Predicats();
         void Add(Predicat *);
         Predicats *Copy();
+        string ToAlgebre();
 
     protected:
 

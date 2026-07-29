@@ -3,6 +3,7 @@
 
 using namespace std;
 #include<string>
+#include<iostream>
 #include"Notation.h"
 #include"Variables.h"
 #include"Corps.h"
@@ -17,6 +18,7 @@ class Literal
         Literal();
         virtual ~Literal();
         void AssignFromCorps(Corps *);
+        string ToAlgebre();
 
     protected:
 
@@ -29,6 +31,7 @@ class Literals
     vector <Literal*> Items;
     Literals();
     virtual ~Literals();
+    Literal *GetFromName(string );
 };
 
 #endif // LITERAL_H

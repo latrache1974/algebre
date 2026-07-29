@@ -102,7 +102,6 @@ string NodeFunction::ToString()
 
 string NodeOperator1::ToString()
 {
-  // Un seul opérateur unaire pour l'instant : otNot.
   return "not ("+node->ToString()+")";
 }
 

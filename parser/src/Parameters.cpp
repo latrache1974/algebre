@@ -31,3 +31,15 @@ Parameter *Parameter::Copy()
   r->type=type;
   return r;
 }
+
+string Parameters::ToAlgebre()
+{
+  string r = "";
+  for (size_t i = 0; i < Items.size(); i++)
+  {
+    if (i > 0)
+      r += ",";
+    r += Items[i]->type + " " + Items[i]->ident;
+  }
+  return r;
+}

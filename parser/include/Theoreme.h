@@ -20,6 +20,7 @@ class Theoreme
         virtual ~Theoreme();
         void AssignFromDoubleIdentList(Parameters *);
         void AssignFromCorpsM(CorpsM *);
+        string ToAlgebre();
 
     protected:
 
@@ -32,6 +33,7 @@ class Theoremes
     vector <Theoreme*> Items;
     Theoremes();
     virtual ~Theoremes();
+    Theoreme *GetFromName(string );
 };
 
 #endif // THEOREME_H

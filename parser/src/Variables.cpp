@@ -74,3 +74,39 @@ Variable *Variable::Copy()
     r->depends=depends->Copy();
   return r;
 }
+
+string Variables::ToAlgebre()
+{
+  if ( Items.size() == 0)
+    return "";
+  string r = "var ";
+  for (size_t i = 0; i < Items.size(); i++)
+  {
+    Variable *v = Items[i];
+    if (i > 0)
+      r += "    ";
+    r += Variable::QuantifierToAlgebre(v->q) + " " + v->ident + " : " + v->type;
+    if (v->p)
+      r += ", " + v->p->ToAlgebre();
+    if (v->depends)
+    {
+    string deps = v->depends->ToAlgebre();
+    if (deps != "")
+      r += " depends " + deps;
+    }
+    r += ";\n";
+  }
+  return r;
+}
+
+string Variable::QuantifierToAlgebre(Quantifier q)
+{
+  if ( q==_forall )
+    return "forall";
+  if ( q==_exists )
+    return "exists";
+  if ( q==_existsu )
+    return "exists";
+  return "?"  ;
+}
+

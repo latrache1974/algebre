@@ -12,7 +12,7 @@ class Predicat
         Predicat();
         virtual ~Predicat();
         Predicat *Copy();
-        string ToString();
+        string ToAlgebre();
 
     protected:
 

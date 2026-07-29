@@ -20,6 +20,7 @@ class Function
         virtual ~Function();
         void AssignFromDoubleIdentList(Parameters *);
         void AssignFromCorps(Corps *);
+        string ToAlgebre();
 
     protected:
 
@@ -32,6 +33,7 @@ class Functions
       vector<Function*> Items;
       Functions();
       virtual ~Functions();
+      Function *GetFromName(string );
 };
 
 #endif // FUNCTION_H
