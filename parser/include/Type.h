@@ -15,7 +15,7 @@ class Type
         Parameters *params;
         Variables *Vars;
         Predicat *cond, *sentence;
-        Predicat *baseType; // type de base optionnel (clause "extend"), NULL si absent
+        string baseType; // type de base optionnel (clause "extend"), NULL si absent
         Type();
         virtual ~Type();
         void AssignFromDoubleIdentList(Parameters *);

@@ -49,6 +49,7 @@
 
     #include <string>
     #include <iostream>
+    #include <sstream>
     class Driver; // Déclaration anticipée du gestionnaire de contexte
     #include "Corps.h"
     #include "Type.h"
@@ -59,7 +60,8 @@
     #include "Utils.h"
     #include "UniverseBase.h"
 
-#line 63 "parser.tab.hh"
+
+#line 65 "parser.tab.hh"
 
 
 # include <cstdlib> // std::abort
@@ -195,7 +197,7 @@
 
 #line 5 "parser.yy"
 namespace yy {
-#line 199 "parser.tab.hh"
+#line 201 "parser.tab.hh"
 
 
 
@@ -422,7 +424,6 @@ namespace yy {
       // DoubleIdentList1
       char dummy9[sizeof (Parameters *)];
 
-      // ExtendClause
       // Predicat
       // Atom
       char dummy10[sizeof (Predicat *)];
@@ -447,6 +448,7 @@ namespace yy {
       // STRING
       // NAMESPACE
       // QUANTIFIER
+      // ExtendClause
       // TypeName
       // T
       char dummy15[sizeof (std::string)];
@@ -700,7 +702,6 @@ namespace yy {
         value.move< Parameters * > (std::move (that.value));
         break;
 
-      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_Predicat: // Predicat
       case symbol_kind::S_Atom: // Atom
         value.move< Predicat * > (std::move (that.value));
@@ -730,6 +731,7 @@ namespace yy {
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
+      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_TypeName: // TypeName
       case symbol_kind::S_T: // T
         value.move< std::string > (std::move (that.value));
@@ -1032,7 +1034,6 @@ switch (yykind)
         value.template destroy< Parameters * > ();
         break;
 
-      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_Predicat: // Predicat
       case symbol_kind::S_Atom: // Atom
         value.template destroy< Predicat * > ();
@@ -1062,6 +1063,7 @@ switch (yykind)
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
+      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_TypeName: // TypeName
       case symbol_kind::S_T: // T
         value.template destroy< std::string > ();
@@ -2261,7 +2263,6 @@ switch (yykind)
         value.copy< Parameters * > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_Predicat: // Predicat
       case symbol_kind::S_Atom: // Atom
         value.copy< Predicat * > (YY_MOVE (that.value));
@@ -2291,6 +2292,7 @@ switch (yykind)
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
+      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_TypeName: // TypeName
       case symbol_kind::S_T: // T
         value.copy< std::string > (YY_MOVE (that.value));
@@ -2367,7 +2369,6 @@ switch (yykind)
         value.move< Parameters * > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_Predicat: // Predicat
       case symbol_kind::S_Atom: // Atom
         value.move< Predicat * > (YY_MOVE (s.value));
@@ -2397,6 +2398,7 @@ switch (yykind)
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_NAMESPACE: // NAMESPACE
       case symbol_kind::S_QUANTIFIER: // QUANTIFIER
+      case symbol_kind::S_ExtendClause: // ExtendClause
       case symbol_kind::S_TypeName: // TypeName
       case symbol_kind::S_T: // T
         value.move< std::string > (YY_MOVE (s.value));
@@ -2469,7 +2471,7 @@ switch (yykind)
 
 #line 5 "parser.yy"
 } // yy
-#line 2473 "parser.tab.hh"
+#line 2475 "parser.tab.hh"
 
 
 

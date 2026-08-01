@@ -28,6 +28,7 @@ class Utils
         static Predicat *CreateReturn();
         static Predicat *CreateReturn(Predicats *);
         static void PerformeInclude(string );
+        static void Debug(string );
     protected:
 
     private:

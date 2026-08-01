@@ -8,6 +8,7 @@ Type::Type()
         Vars=NULL;
         cond=NULL;
         sentence=NULL;
+        baseType="";
 }
 
 Type::~Type()
@@ -60,8 +61,7 @@ Type *Type::Copy()
     r->cond=cond->Copy();
   if (sentence)
     r->sentence=sentence->Copy();
-  if (baseType)
-    r->baseType=baseType->Copy();
+  r->baseType=baseType;
   return r;
 }
 
@@ -70,8 +70,8 @@ string Type::ToAlgebre()
   string r = "type " + name;
   if (params)
        r += " (" + params->ToAlgebre() + ")";
-  if (baseType)
-    r += " extend " + baseType->ToAlgebre();
+  if (!baseType.empty())
+    r += " extend " + baseType;
   r += ";\n";
   if (notation)
     r += notation->ToAlgebre();

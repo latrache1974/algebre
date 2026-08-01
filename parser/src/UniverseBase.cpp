@@ -59,19 +59,19 @@ void UniverseBase::SetGoal(Goal *g)
 bool UniverseBase::Parse(string filename,string *msg)
 {
     Driver driver;
-    cout << "[" << filename << "] Lancement de l'analyse syntaxique..." << std::endl;
+    Utils::Debug("fichier : "+filename);
 
     int code_retour = driver.parse(AlgebreSourceDirectory+filename);
 
     if (code_retour == 0) {
-        cout << filename << " OK OK OK OK OK OK ." << std::endl;
+      //  cout << filename << " OK OK OK OK OK OK ." << std::endl;
         return true;
     } else {
         // Les erreurs de syntaxe (ligne/colonne incluses) ont déjà été
         // affichées par yy::Parser::error() pendant driver.parse().
         if (msg)
-            *msg = "Des erreurs de syntaxe ont ete detectees.";
-        cerr << filename << "  NO NO NO NO!" << std::endl;
+            *msg = "           Des erreurs de syntaxe ont ete detectees.";
+        Utils::Debug(filename + *msg );
         return false;
     }
 }

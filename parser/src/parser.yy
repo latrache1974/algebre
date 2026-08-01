@@ -11,6 +11,7 @@
 %code requires {
     #include <string>
     #include <iostream>
+    #include <sstream>
     class Driver; // Déclaration anticipée du gestionnaire de contexte
     #include "Corps.h"
     #include "Type.h"
@@ -20,6 +21,7 @@
     #include "Literal.h"
     #include "Utils.h"
     #include "UniverseBase.h"
+
 }
 %locations
 
@@ -81,7 +83,7 @@
 %type <Parameters *> DoubleIdentList1
 %type <std::string> TypeName
 %type <std::string> T
-%type <Predicat *> ExtendClause
+%type <std::string> ExtendClause
 %type <NameSpaceList *> DependsClause
 %type <NameSpaceList *> DependsList
 %type <Variables *> VariablesDefinitions
@@ -111,9 +113,9 @@ IncludeSection : INCLUDE STRING IncludeSection {Utils::PerformeInclude($2);}
 
 Algebre : TypeDefinition Algebre {universe->AddType($1);}
         | FunctionDefinition Algebre {universe->AddFunction($1);}
-        | LiteralDefinition Algebre  {cout << "Literal OK" << endl; universe->AddLiteral($1);}
+        | LiteralDefinition Algebre  {universe->AddLiteral($1);}
         | TheoremeDefinition Algebre {universe->AddTheoreme($1);}
-        | GoalDefinition END DOT {printf("all is ok\n"); universe->SetGoal($1);}
+        | GoalDefinition END DOT {universe->SetGoal($1);}
         ;
 
 TypeDefinition : TYPE IDENT LPAREN DoubleIdentList RPAREN ExtendClause SEMI NotationDefinition VariablesDefinitions Corps
@@ -129,8 +131,8 @@ TypeDefinition : TYPE IDENT LPAREN DoubleIdentList RPAREN ExtendClause SEMI Nota
 /* Type de base optionnel, ex: "extend relation(a,b)" ou "extend ident".
    Réutilise directement Atom (déjà capable de produire ident ou ident(...)),
    pas besoin d'une règle/type dédiés. */
-ExtendClause : EXTEND Atom {$$=$2;}
-             | /* vide */ {$$=NULL;}
+ExtendClause : EXTEND IDENT {$$=$2;}
+             | /* vide */ {$$="";}
              ;
 
 /* "any" : n'importe quel type, utilisable partout où un nom de type est attendu */
@@ -312,5 +314,8 @@ Atom1 : Atom COMMA Atoms {$$=$3; $$->Add($1);}
 // Gestion des erreurs syntaxiques
 // Avec %locations, Bison exige cette signature précise (position + message).
 void yy::Parser::error(const location_type& l, const std::string& msg) {
-    std::cerr << l << ": " << msg << std::endl;
+//    std::cerr << l << ": " << msg << std::endl;
+    std::ostringstream oss;
+    oss << l;
+    Utils::Debug(oss.str() + " : " + msg);
 }

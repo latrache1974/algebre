@@ -7,7 +7,7 @@
     #define YY_USER_ACTION  driver.location.columns(yyleng);
 %}
 
-%option noyywrap nounput noinput batch debug
+%option noyywrap nounput noinput batch 
 
 %%
 

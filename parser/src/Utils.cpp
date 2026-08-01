@@ -1,4 +1,5 @@
 #include "Utils.h"
+#include "../../AlgebraSystem/wxMain.h"
 
 Utils::Utils()
 {
@@ -152,4 +153,9 @@ void Utils::PerformeInclude(string filename)
       exit(1);
     universe->CopyFrom(univ);
     delete univ;
+}
+
+void Utils::Debug(string s)
+{
+   MainFrame->Debug(s);
 }
